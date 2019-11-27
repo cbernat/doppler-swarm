@@ -1,9 +1,8 @@
-version: '3.7'
+version: "3.7"
 services:
-
   sites-proxy:
     image: fromdoppler/sites-proxy:v0
-    depends_on: 
+    depends_on:
       - doppler-webapp
       - doppler-docker-playground
       - doppler-forms
@@ -16,7 +15,7 @@ services:
       mode: replicated
       restart_policy:
         condition: on-failure
-  
+
   doppler-webapp:
     image: fromdoppler/doppler-webapp:production-v1
     networks:
@@ -34,6 +33,8 @@ services:
         target: PlaygroundSettings__AnotherSecretSetting
       - source: doppler-docker-playground_appsettings.Secret.json
         target: appsettings.Secret.json
+      - doppler-docker-playground_ssl_cert
+      - doppler-docker-playground_key_cert
     networks:
       - sites
     deploy:
@@ -75,3 +76,7 @@ secrets:
     file: ./secrets/EncryptionSettings/SaltValueAsAsciiString
   EncryptionSettings__Password:
     file: ./secrets/EncryptionSettings/Password
+  doppler-docker-playground_ssl_cert:
+    file: ./secrets/doppler-docker-playground/cert.pem
+  doppler-docker-playground_key_cert:
+    file: ./secrets/doppler-docker-playground/key.pem
