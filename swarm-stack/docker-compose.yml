@@ -3,9 +3,9 @@ services:
   sites-proxy:
     image: fromdoppler/sites-proxy:v0
     depends_on:
-      - doppler-webapp
+      # - doppler-webapp
       - doppler-docker-playground
-      - doppler-forms
+      # - doppler-forms
     networks:
       - sites
     ports:
@@ -17,15 +17,15 @@ services:
       restart_policy:
         condition: on-failure
 
-  doppler-webapp:
-    image: fromdoppler/doppler-webapp:production-v1
-    networks:
-      - sites
-    deploy:
-      replicas: 2
-      mode: replicated
-      restart_policy:
-        condition: on-failure
+  # doppler-webapp:
+  #   image: fromdoppler/doppler-webapp:production-v1
+  #   networks:
+  #     - sites
+  #   deploy:
+  #     replicas: 2
+  #     mode: replicated
+  #     restart_policy:
+  #       condition: on-failure
 
   doppler-docker-playground:
     image: fromdoppler/doppler-docker-playground:v0
@@ -44,21 +44,21 @@ services:
       restart_policy:
         condition: on-failure
 
-  doppler-forms:
-    image: fromdoppler/doppler-forms:v0
-    secrets:
-      - source: doppler-forms_appsettings.Secret.json
-        target: appsettings.Secret.json
-      - EncryptionSettings__InitVectorAsAsciiString
-      - EncryptionSettings__SaltValueAsAsciiString
-      - EncryptionSettings__Password
-    networks:
-      - sites
-    deploy:
-      replicas: 2
-      mode: replicated
-      restart_policy:
-        condition: on-failure
+  # doppler-forms:
+  #   image: fromdoppler/doppler-forms:v0
+  #   secrets:
+  #     - source: doppler-forms_appsettings.Secret.json
+  #       target: appsettings.Secret.json
+  #     - EncryptionSettings__InitVectorAsAsciiString
+  #     - EncryptionSettings__SaltValueAsAsciiString
+  #     - EncryptionSettings__Password
+  #   networks:
+  #     - sites
+  #   deploy:
+  #     replicas: 2
+  #     mode: replicated
+  #     restart_policy:
+  #       condition: on-failure
 
 networks:
   sites:
