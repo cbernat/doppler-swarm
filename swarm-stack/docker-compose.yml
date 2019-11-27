@@ -10,6 +10,7 @@ services:
       - sites
     ports:
       - 80:80
+      - 443:443
     deploy:
       replicas: 2
       mode: replicated
