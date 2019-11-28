@@ -16,6 +16,9 @@ services:
       mode: replicated
       restart_policy:
         condition: on-failure
+    secrets:
+      - site.crt
+      - site.key
 
   # doppler-webapp:
   #   image: fromdoppler/doppler-webapp:production-v1
@@ -34,8 +37,6 @@ services:
         target: PlaygroundSettings__AnotherSecretSetting
       - source: doppler-docker-playground_appsettings.Secret.json
         target: appsettings.Secret.json
-      - doppler-docker-playground_ssl_cert
-      - doppler-docker-playground_key_cert
     networks:
       - sites
     deploy:
@@ -77,7 +78,7 @@ secrets:
     file: ./secrets/EncryptionSettings/SaltValueAsAsciiString
   EncryptionSettings__Password:
     file: ./secrets/EncryptionSettings/Password
-  doppler-docker-playground_ssl_cert:
-    file: ./secrets/doppler-docker-playground/cert.pem
-  doppler-docker-playground_key_cert:
-    file: ./secrets/doppler-docker-playground/key.pem
+  site.crt:
+    file: ./secrets/site.crt
+  site.key:
+    file: ./secrets/site.key

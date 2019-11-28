@@ -2,6 +2,8 @@ FROM nginx:1.16-alpine
 
 COPY html/* /usr/share/nginx/html/
 COPY conf.d/* /etc/nginx/conf.d/
+# COPY site.crt /etc/nginx/
+# COPY site.key /etc/nginx/
 ARG version=unknown
 RUN echo $version > /usr/share/nginx/html/version.txt
 
